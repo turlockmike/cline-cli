@@ -1,6 +1,6 @@
 {
   "name": "hataraku",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "An autonomous coding agent and SDK for building AI-powered development tools",
   "author": {
     "name": "Michael Darmousseh"
