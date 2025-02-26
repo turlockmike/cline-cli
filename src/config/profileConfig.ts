@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const ProfileOptionsSchema = z.object({
   stream: z.boolean().optional().default(true),
   sound: z.boolean().optional().default(true),
+  verbose: z.boolean().optional().default(false),
   maxRetries: z.number().int().positive().optional().default(3),
   maxSteps: z.number().int().positive().optional().default(50)
 });
@@ -37,6 +38,7 @@ export const DEFAULT_PROFILE: Profile = {
   options: {
     stream: true,
     sound: true,
+    verbose: false,
     maxRetries: 3,
     maxSteps: 50
   }

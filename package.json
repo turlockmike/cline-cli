@@ -50,6 +50,7 @@
     "build:audio": "mkdir -p dist/audio && cp -r src/audio/* dist/audio/",
     "build": "npm run build:clean && npm run build:cjs && npm run build:esm && npm run build:cli && npm run build:audio",
     "build:cli": "node esbuild.js --cli --production",
+    "cli": "tsx src/cli.ts",
     "dev": "OPENROUTER_API_KEY=$(grep OPENROUTER_API_KEY .env | cut -d '=' -f2) tsx src/cli.ts",
     "example": "tsx examples/run.ts",
     "typecheck": "npm run typecheck:esm && npm run typecheck:cjs && npm run typecheck:examples",
@@ -91,6 +92,7 @@
   },
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "2.0.5",
+    "@ai-sdk/google-vertex": "^2.1.19",
     "@anthropic-ai/sdk": "0.37.0",
     "@aws-sdk/credential-providers": "3.750.0",
     "@inquirer/prompts": "^3.3.0",

@@ -24,6 +24,7 @@ program
   .option('-i, --interactive', 'Run in interactive mode, prompting for tasks')
   .option('--no-sound', 'Disable sound effects')
   .option('--no-stream', 'Disable streaming responses')
+  .option('-v, --verbose', 'Enable verbose output with intermediate task information')
   .option('--region <region>', 'AWS region for Bedrock (defaults to AWS_REGION env var)')
   .option('--profile <profile>', 'Use specific profile')
   .option('--agent <agent>', 'Use specific agent')
@@ -40,6 +41,7 @@ Examples:
   $ hataraku -i "initial task"                                             # Interactive mode with initial task
   $ hataraku --no-sound "create a test file"                               # Run without sound effects
   $ hataraku --no-stream "explain this code"                               # Run without streaming responses
+  $ hataraku --verbose "debug this issue"                                  # Run with verbose output
   $ hataraku --profile coding "refactor this code"                         # Use a specific profile
   $ hataraku --agent code-reviewer "review my code"                        # Use a specific agent
   $ hataraku profile list                                                  # List all profiles

@@ -75,13 +75,38 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 
 6. Push to your fork and submit a pull request.
 
-## Build Commands
+## Build and Development Commands
 
-- Build all: `npm run build`
-- Clean: `npm run clean`
-- Dev mode: `npm run dev` 
-- Type check: `npm run typecheck`
-- Lint: `npm run lint`
+Hataraku uses a comprehensive set of npm scripts for development:
+
+### Core Build Commands
+- `npm run build` - Build all components (cleans, builds CJS, ESM, CLI, and copies audio files)
+- `npm run build:clean` - Remove the dist directory
+- `npm run build:cjs` - Build CommonJS modules
+- `npm run build:esm` - Build ES modules
+- `npm run build:cli` - Build the CLI using esbuild
+- `npm run build:audio` - Copy audio files to the dist directory
+- `npm run clean` - Remove the dist directory
+
+### Development Commands
+- `npm run dev` - Run the CLI in development mode with OpenRouter API key from .env
+- `npm run cli` - Run the CLI directly using tsx
+- `npm run example` - Run examples (use `npm run example -- <example-name>` for specific examples)
+- `npm start` - Run the built CLI
+
+### Quality Assurance
+- `npm run typecheck` - Run all type checks
+- `npm run typecheck:esm` - Type check ESM build
+- `npm run typecheck:cjs` - Type check CJS build
+- `npm run typecheck:examples` - Type check examples
+- `npm run lint` - Run ESLint on source files
+- `npm test` - Run Jest tests
+
+### Release Process
+- `npm run changeset` - Create a new changeset for version management
+- `npm run version-packages` - Update versions based on changesets
+- `npm run release` - Publish to npm
+- `npm run prepublishOnly` - Clean and build before publishing
 
 ## Testing
 
@@ -119,6 +144,44 @@ Additional testing commands:
   - Always use curly braces for control statements
   - Use strict equality (`===` and `!==`)
   - Don't throw literals (use Error objects)
+
+## Project Structure
+
+Hataraku is organized as follows:
+
+- `src/` - Source code
+  - `core/` - Core functionality and agent implementation
+  - `cli/` - Command-line interface implementation
+  - `config/` - Configuration management
+  - `utils/` - Utility functions
+  - `shared/` - Shared types and constants
+  - `services/` - Service implementations
+- `examples/` - Example code demonstrating various features
+- `docs/` - Documentation
+- `dist/` - Build output (generated)
+
+## Dependencies
+
+Hataraku uses several key dependencies:
+
+- **AI and LLM Integration**
+  - `ai`: Core AI SDK for text generation
+  - `@anthropic-ai/sdk`: Anthropic Claude integration
+  - `@openrouter/ai-sdk-provider`: OpenRouter integration
+  - `@ai-sdk/amazon-bedrock`: AWS Bedrock integration
+  - `@modelcontextprotocol/sdk`: MCP protocol support
+
+- **CLI and User Interface**
+  - `commander`: Command-line interface framework
+  - `@inquirer/prompts`: Interactive command-line prompts
+  - `chalk`: Terminal text styling
+
+- **Development Tools**
+  - `typescript`: Type safety
+  - `jest`: Testing framework
+  - `eslint`: Code linting
+  - `husky`: Git hooks
+  - `changesets`: Version management
 
 ## License
 

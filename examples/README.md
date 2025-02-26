@@ -35,6 +35,7 @@ npm run example
 
 - `basic` - Basic task execution
 - `docs` - Workflow documentation example
+- `gemini` - Fast poem generation using Google's Gemini Flash Lite model with streaming
 - `hmcp` - Hataraku with MCP integration
 - `jira` - MCP integration with Jira
 - `math` - Simple math operations
@@ -49,6 +50,9 @@ npm run example
 - `struct-or` - Structured task with OpenRouter
 - `thread` - Thread reuse example
 - `tool` - Tool use example (accepts a prompt argument)
+- `vertex` - Google Vertex AI integration example
+- `openai` - OpenAI integration example
+- `anthropic` - Anthropic integration example
 
 ## Special Commands
 
@@ -59,7 +63,20 @@ npm run example
 Examples require certain environment variables to be set in a `.env` file at the root of the project:
 
 ```
+# For OpenRouter examples
 OPENROUTER_API_KEY=your_api_key_here
+
+# For Google Vertex AI examples
+# Set the path to your Google Cloud service account key file
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service-account-key.json
+# Or set your Google Cloud project ID (optional)
+GOOGLE_CLOUD_PROJECT=your-project-id
+
+# For OpenAI examples
+OPENAI_API_KEY=your_openai_api_key_here
+
+# For Anthropic examples
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
 
-The example runner automatically loads these variables from the `.env` file. 
+The example runner automatically loads these variables from the `.env` file.

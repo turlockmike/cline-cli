@@ -69,6 +69,9 @@ hataraku --no-stream "generate a JSON configuration"
 # Disable sound for quiet operation
 hataraku --no-sound "run silent task"
 
+# Enable verbose mode for detailed output
+hataraku --verbose "debug this complex issue"
+
 # Web Interface
 hataraku serve --port 3000
 ```

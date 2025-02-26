@@ -5,10 +5,20 @@ import { TaskHistory } from '../TaskHistory';
 import { ALL_TOOLS } from '../tools';
 import { getMcpTools } from '../mcp/toolWrapper';
 import { ToolManager } from '../../config/ToolManager';
+import { colors, log } from '../../utils/colors';
 
-export async function createCLIAgent(model: LanguageModelV1 | Promise<LanguageModelV1>) {
+export interface CLIAgentOptions {
+  verbose?: boolean;
+}
+
+export async function createCLIAgent(model: LanguageModelV1 | Promise<LanguageModelV1>, options?: CLIAgentOptions) {
+  const verbose = options?.verbose === true;
+  
   // Initialize tools
   const tools = { ...ALL_TOOLS };
+  if (verbose) {
+    log.system('Initializing CLI agent with built-in tools');
+  }
   
   try {
     // Get MCP tools from tool manager
@@ -18,9 +28,17 @@ export async function createCLIAgent(model: LanguageModelV1 | Promise<LanguageMo
     // Get tool configurations
     const toolConfigs = await toolManager.listTools();
     
+    if (verbose) {
+      log.system(`Loading MCP tools from ${toolConfigs.length} configurations`);
+    }
+    
     // Load MCP tools for each configuration
     for (const toolConfig of toolConfigs) {
       try {
+        if (verbose) {
+          log.system(`Loading tool configuration: ${toolConfig}`);
+        }
+        
         const resolvedConfig = await toolManager.getResolvedToolConfig(toolConfig);
         
         // Convert to the format expected by getMcpTools
@@ -60,5 +78,6 @@ ${getEnvironmentInfo()}`,
     model,
     taskHistory: new TaskHistory(),
     tools,
+    verbose: verbose
   });
 } 

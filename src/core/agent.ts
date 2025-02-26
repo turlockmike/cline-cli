@@ -4,6 +4,7 @@ import { AsyncIterableStream } from './types';
 import { Thread } from './thread/thread';
 import { TaskHistory, HistoryEntry } from './TaskHistory';
 import { v4 as uuid } from 'uuid';
+import { colors, log } from '../utils/colors';
 const DEFAULT_MAX_STEPS = 25;
 const DEFAULT_MAX_RETRIES = 4;
 
@@ -31,12 +32,14 @@ export interface AgentConfig {
   tools?: ToolSet;
   callSettings?: CallSettings;
   taskHistory?: TaskHistory;
+  verbose?: boolean; // Add verbose flag to configuration
 }
 
 export interface TaskInput<T = unknown> {
   thread?: Thread;
   schema?: z.ZodType<T>;
   stream?: boolean;
+  verbose?: boolean; // Add verbose flag to TaskInput
 }
 
 export interface StreamingTaskResult {
@@ -51,6 +54,7 @@ export class Agent {
   public readonly callSettings: CallSettings;
   public readonly role: string;
   private readonly taskHistory?: TaskHistory;
+  private readonly verbose: boolean;
 
   constructor(config: AgentConfig) {
     if (!config.name || config.name.trim() === '') {
@@ -63,6 +67,7 @@ export class Agent {
     this.callSettings = config.callSettings || {};
     this.role = config.role;
     this.taskHistory = config.taskHistory;
+    this.verbose = config.verbose || false;
   }
 
   private getSystemPrompt() {
@@ -91,6 +96,20 @@ export class Agent {
     const maxSteps = this.callSettings.maxSteps || DEFAULT_MAX_STEPS;
     const maxRetries = this.callSettings.maxRetries || DEFAULT_MAX_RETRIES;
     thread.addMessage('user', task);
+    
+    // Use verbose mode if specified in input or agent config
+    const isVerbose = input?.verbose !== undefined ? input.verbose : this.verbose;
+    
+    if (isVerbose) {
+      log.system('\n🔍 Task details:');
+      log.system(`Task: ${task}`);
+      log.system(`Max steps: ${maxSteps}, Max retries: ${maxRetries}`);
+      log.system(`Stream: ${input?.stream ? 'enabled' : 'disabled'}`);
+      log.system('Thread history:');
+      for (const msg of thread.getMessages()) {
+        log.system(`- ${msg.role}: ${msg.content.substring(0, 50)}${msg.content.length > 50 ? '...' : ''}`);
+      }
+    }
 
     // Create history entry
     const taskId = uuid();
@@ -326,4 +345,4 @@ export class Agent {
 
 export function createAgent(config: AgentConfig): Agent {
   return new Agent(config);
-} 
+}
